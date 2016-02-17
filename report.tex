@@ -1,0 +1,69 @@
+\documentclass{scrartcl}
+
+\usepackage[tmargin=1.5cm, 
+bmargin=2.5cm, 
+lmargin=2.5cm,
+rmargin=1.5cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage{cmbright}
+
+% Mengen Zeichen
+\usepackage{amsmath} 
+\usepackage{amssymb}
+
+\usepackage[singlespacing]{setspace} % Zeilenabstand
+
+\usepackage{tabularx}
+\usepackage{xcolor,colortbl}
+
+\usepackage{graphicx}
+%\setlength{\parindent}{0pt}
+
+\renewcommand{\contentsname}{Inhaltsverzeichnis}
+
+\title{Projekt Chemisches Rauschen}
+\author{Anja Seegebrecht, Julia Kirchner}
+\date{Wintersemester 2015-2016}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\section{Einleitung}
+
+
+\section{Grundlagen}
+\subsection{Exponential- und Gammaverteilung}
+Bei der Exponentialverteiung handelt es sich um eine stetige Wahrscheinlichkeitsverteilung über dem Intervall $[0, +\infty]$. Häufig kommt sie zur Anwendung, wenn nach der Zeit gesucht wird, die zwischen zwei Ereignissen verstreicht.
+Ihre Dichtefunktion lautet
+\begin{align*}
+    f(t) = \begin{cases} \lambda \cdot e^{-\lambda t} \qquad \text{falls } t \geq 0 \\ 0 \qquad \text{falls } t < 0 \end{cases}, \lambda \in \mathbb{R}^+.
+\end{align*}
+Hierbei bezeichnet $\lambda$ die Ereignisrate (später die Reaktionsrate). Das heißt, $\lambda$ gibt die durchschnittliche Anzahl der Ereignisse an, die in einer Zeiteinheit stattfinden. Durch Verwendung der Exponentialverteilung erhält man die Wahrscheinlichkeit, dass ein Ereignis zwischen $t_0=0$ und $t$ stattfindet. Ein Anwendungsgebiet dieser Verteilung ist der radioaktive Zerfall von Atomen. %Meistens ist die tatsächliche Funktion keine Exponentialverteilung und wird lediglich als solche approximiert, da man leichter mit ihr arbeiten kann. Bedingung für die Annäherung sind die poissonschen Annahmen.
+\subsection{Chemische Kinetik}
+\subsection{Monte-Carlo-Schritt}
+\subsection{Gillespie Algorithmus}
+
+\section{Radioaktiver Zerfall}
+\subsection{Differentialgleichung}
+\subsection{Übergangsrate}
+\subsection{Simulation}
+\subsection{Vergleich und Fazit}
+\subsection{*Zusatz: Mittlere Zeit bis zum vollständigen Zerfall}
+
+\section{Brusselatormodell}
+\subsection{Differentialgleichung}
+\subsection{Übergangsraten}
+\subsection{Simulation}
+\dots 
+\section{Simulation von Ratenübergängen}
+\section{Von Reaktionsraten und Übergangsraten}
+
+\end{document}
