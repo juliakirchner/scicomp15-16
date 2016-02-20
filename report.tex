@@ -67,12 +67,50 @@ Die Grundlage der Monte-Carlo-Methode ist es, für zufällig ausgewählte Parame
 \item{Iterieren}: Immer wieder von Schritt zwei beginnen, bis die Anzahl der Edukte null ist oder die Simulationszeit überschritten wurde.
 \end{itemize}
 
+\newpage
+
 \section{Radioaktiver Zerfall}
+\subsection{Einleitung}
+Beim radioaktiven Zerfall wandeln sich Kerne eines Elements A unabhängig voneinander in Kerne eines Elements B um. Dabei ist die Reaktionsrate $k_0$ die Wahrscheinlichkeit, mit der ein Kern des Elements A zerfällt. Für einen einzelnen Kern kann nicht festgestellt werden, nach welcher Zeit er zerfällt. Stattdessen untersucht man das Verhalten aller Kerne in einem Zeitintervall. Auf diese Weise kann man sagen, wie viele Kerne duchschnittlich zu einer bestimmten Zeit zerfallen sind.
+
 \subsection{Differentialgleichung}
+Bekannt ist, dass der Quotient d$N(t)$/d$t$ proportional zu $N(t)$ ist. Der Proportionalitätsfaktor ist durch die Reaktionsrate $k_0$ gegeben. Somit erhält man die Differentialgleichung für die Anzahl $N_A$ des radioaktiven Stoffs:
+\begin{align*}
+    \frac{dN_A(t)}{dt} = -k_0 \cdot N_A(t) \text{ bzw. } dN_A(t) = -k_0 \cdot N_A(t) \cdot dt.
+\end{align*}
+Da das Volumen sich während der Reaktionen nicht verändert, lautet die Differentialgleichung für die Konzentration $a$ dementsprechend
+\begin{align*}
+    d\frac{N_A}{V}(t) = -k_0 \cdot \frac{N_{A}}{V}(t) \cdot dt, \text{ wobei } V = \text{konst.} %oder \frac{dN_A(t)}{V}??
+\end{align*}
+Für die Lösung der Differentialgleichung wird diese umgeformt und das Integral von $t_0=0$ bis $t$ gebildet. Im Folgenden ist die Konzentration $a_0$ zum Zeitpunkt $t_0 = 0$ gegeben durch $N_A/V(0)$.
+\begin{align*}
+    & dN_A/V(t) = -k_0 \cdot N_{A}/V(t) \cdot dt \\
+    \Leftrightarrow &~ (N_A/V(t))^{-1} \cdot dN_A/V(t) = -k_0 \cdot dt \\
+    \Leftrightarrow &~ \ln (N_A/V(t)) - \ln (N_A/V(0)) = -k_0 \cdot t \\
+    \Leftrightarrow &~ \ln(N_A/V(t)) - \ln(a_0) = -k_0 \cdot t \\
+    \Leftrightarrow &~ e^{\ln(N_A/V(t)) - \ln(a_0)} = e^{-k_0 \cdot t} \\
+    \Leftrightarrow &~ N_A/V(t) = a_0 \cdot e^{-k_0 \cdot t}
+\end{align*}
+Zum Zeitpunkt $t_0=0$ ist $a$ erfahrungsgemäß maximal, nämlich $a_0$. Mit fortschreitender Zeit nimmt die Konzentration exponentiell ab, da auch die Anzahl der Kerne des Stoffs A exponentiell abnimmt und das Volumen konstant bleibt.
+
 \subsection{Übergangsrate}
-\subsection{Simulation}
+Durch die Übergangsrate $r_0$ wird bei der Simulation bestimmt, welche der möglichen Reaktionen als nächstes stattfindet. Da im gegebenen Beispiel des radioaktiven Zerfalls lediglich eine Reaktion, nämlich die Reaktion $R_0: A \rightarrow B$, möglich ist, findet diese allerdings in jedem Fall statt. Die Übergangsrate ist das Produkt aus der Reaktionsrate der (jeweiligen) Reaktion, den momentanen Anzahlen der Teilchen der beteiligten Stoffe sowie des Volumen, in dem sie sich befinden. Im Falle des radioaktiven Zerfalls lautet die Gleichung für die Übergangsrate
+\begin{align}
+    r_0 = k_0 \cdot N_A(t) \cdot V.
+\end{align}
+
+\subsection{Simulation} 
+\subsubsection{Initialisierung}
+Zunächst werden einige Variablen für die Simulation gesetzt. Standardmäßig ist das Volumen $V = 1$, die Zahl $N_{B, 0}$ der Teilchen des Stoffs B ist gleich 0. Für die Zahl $N_{A, 0}$ der Teilchen des Stoffs A werden die Werte $10^1$, $10^2$, \dots, $10^6$ als Anfangswerte verwendet. Die Reaktionsrate $k_0$ ist 1, da es nur eine mögliche Reaktion gibt und die Wahrscheinlichkeit, dass diese innerhalb einer Zeiteinheit stattfindet, 100 Prozent beträgt. Es wird ein Array $n_0$ angelegt, der alle Anzahlen der an der Reaktion $R_0$ beteiligten Teilchen enthält, also zu Beginn der Simulation $N_{A, 0}$ und $N_{B. 0}$. Ein weiteres Array $k$ enthält die Reaktionsraten aller möglichen Reaktionen, also hier lediglich $k_0$ der Reaktion $R_0$. \\
+Eine Funktion \textit{reaction} wird definiert. Innerhalb dieser Funktion wird der Anfangswert $t_0$, über den die Zahl der vorhandenen Teilchen später geplottet wird, auf 0 gesetzt. Das Array $n$, welches im Folgenden zu jedem Zeitpunkt die Anzahlen der beteiligten Teilchen enthält, wird mit den Anfangswerten aus dem Array $n_0$ versehen.
+
+\subsubsection{Monte Carlo Schritt}
+Für eine einzige Reaktion muss zunächst die jeweilige Übergangsrate berechnet werden. Hierfür wird ebenfalls eine Funktion \textit{calculate\_r} definiert, die dies nach (1) für den Übergang von A nach B tut. %Ist die Summe aller Übergangsraten, bzw. die Übergangsrate $r_0$ gleich 0, so bedeutet das, dass alle Teilchen des Stoffs A zerfallen sind. Dieser Fall wird mit break als Abbruchbedingung festgelegt.
+
 \subsection{Vergleich und Fazit}
 \subsection{*Zusatz: Mittlere Zeit bis zum vollständigen Zerfall}
+
+\newpage
 
 \section{Brusselatormodell}
 \subsection{Differentialgleichung}
@@ -81,5 +119,8 @@ Die Grundlage der Monte-Carlo-Methode ist es, für zufällig ausgewählte Parame
 \dots 
 \section{Simulation von Ratenübergängen}
 \section{Von Reaktionsraten und Übergangsraten}
+\newpage
+\section{Quellenverzeichnis}
+[1] http://www.uni-magdeburg.de/exph/mathe\_gl/dgl-phys1.pdf
 
 \end{document}
