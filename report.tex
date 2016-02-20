@@ -48,8 +48,24 @@ Ihre Dichtefunktion lautet
 \end{align*}
 Hierbei bezeichnet $\lambda$ die Ereignisrate (später die Reaktionsrate). Das heißt, $\lambda$ gibt die durchschnittliche Anzahl der Ereignisse an, die in einer Zeiteinheit stattfinden. Durch Verwendung der Exponentialverteilung erhält man die Wahrscheinlichkeit, dass ein Ereignis zwischen $t_0=0$ und $t$ stattfindet. Ein Anwendungsgebiet dieser Verteilung ist der radioaktive Zerfall von Atomen. %Meistens ist die tatsächliche Funktion keine Exponentialverteilung und wird lediglich als solche approximiert, da man leichter mit ihr arbeiten kann. Bedingung für die Annäherung sind die poissonschen Annahmen.
 \subsection{Chemische Kinetik}
+Die chemische Kinetik ist ein Teilgebiet der physikalischen Chemie. Sie untersucht den zeitlichen Ablauf chemischer Reaktionen und chemisch-physikalischer Vorgänge z.B. Diffusionen. Die grundlegende Größe der Kinetik ist die Reaktionsgeschwindigkeit $v_R$. Die Geschwindigkeit einer chemischen Reaktion gibt die zeitliche Änderung der Stoffmenge oder der Konzentration an.
+Die Reaktionsgeschindigkeit hat stets einen positiven Wert.
+So gilt für eine Elementarreaktion  $A \rightarrow B$
+\begin{align*}
+     v_R = - \frac{\Delta c_A}{\Delta t} = \frac{\Delta c_B}{\Delta t}
+\end{align*}
+ 
+ 
 \subsection{Monte-Carlo-Schritt}
+
+Die Grundlage der Monte-Carlo-Methode ist es, für zufällig ausgewählte Parameter über bestimmte Zusammenhänge die zugehörigen Ergebnisse zu ermitteln.
 \subsection{Gillespie Algorithmus}
+\begin{itemize}
+    \item{Initialisierung}: Festlegung der Anfangsanzahl der Moleküle im System, der Reaktionskonstanten und dem Zufallszahlengenerator.
+\item{Monte Carlo Schritt}: Eine Zufallszahl generieren, um die nächste Reaktion festzulegen und das Zeitintervall, nach dem sie eintreten soll. Die Wahrscheinlichkeit mit der eine Reaktion eintritt, ist proportional zu der Anzahl von Substratmolekülen.
+\item{Aktualisieren}: Die Zeitzählung um das Zufallszeitintervall aus Schritt zwei erhöhen und die Anzahlen der Moleküle aktualisieren
+\item{Iterieren}: Immer wieder von Schritt zwei beginnen, bis die Anzahl der Edukte null ist oder die Simulationszeit überschritten wurde.
+\end{itemize}
 
 \section{Radioaktiver Zerfall}
 \subsection{Differentialgleichung}
