@@ -5,6 +5,8 @@ bmargin=2.5cm,
 lmargin=2.5cm,
 rmargin=1.5cm]{geometry}
 
+\usepackage[ngerman]{babel}
+
 \usepackage[utf8]{inputenc}
 \usepackage{cmbright}
 
@@ -18,9 +20,15 @@ rmargin=1.5cm]{geometry}
 \usepackage{xcolor,colortbl}
 
 \usepackage{graphicx}
-%\setlength{\parindent}{0pt}
+\setlength{\parindent}{0pt}
 
-\renewcommand{\contentsname}{Inhaltsverzeichnis}
+\usepackage{listings} 
+\usepackage{courier}
+\lstset{basicstyle=\ttfamily,breaklines=true}
+\lstset{framextopmargin=50pt,frame=bottomline}
+\lstset{language=Python}
+
+\usepackage{here}
 
 \title{Projekt Chemisches Rauschen}
 \author{Anja Seegebrecht, Julia Kirchner}
@@ -105,20 +113,82 @@ Zunächst werden einige Variablen für die Simulation gesetzt. Standardmäßig i
 Eine Funktion \textit{reaction} wird definiert. Innerhalb dieser Funktion wird der Anfangswert $t_0$, über den die Zahl der vorhandenen Teilchen später geplottet wird, auf 0 gesetzt. Das Array $n$, welches im Folgenden zu jedem Zeitpunkt die Anzahlen der beteiligten Teilchen enthält, wird mit den Anfangswerten aus dem Array $n_0$ versehen.
 
 \subsubsection{Monte Carlo Schritt}
-Für eine einzige Reaktion muss zunächst die jeweilige Übergangsrate berechnet werden. Hierfür wird ebenfalls eine Funktion \textit{calculate\_r} definiert, die dies nach (1) für den Übergang von A nach B tut. %Ist die Summe aller Übergangsraten, bzw. die Übergangsrate $r_0$ gleich 0, so bedeutet das, dass alle Teilchen des Stoffs A zerfallen sind. Dieser Fall wird mit break als Abbruchbedingung festgelegt.
+Für jede mögliche Reaktion muss zunächst die jeweilige Übergangsrate berechnet werden. Hierfür wird ebenfalls eine Funktion \textit{calculate\_r} definiert, die dies nach (1) für den Übergang von A nach B tut. Um die nächste Reaktion festzulegen, muss eine gleichverteilte Zufallszahl generiert werden.  %Ist die Summe aller Übergangsraten, bzw. die Übergangsrate $r_0$ gleich 0, so bedeutet das, dass alle Teilchen des Stoffs A zerfallen sind. Dieser Fall wird mit break als Abbruchbedingung festgelegt.
 
 \subsection{Vergleich und Fazit}
+\begin{minipage}{\textwidth}
+\begin{figure}[H]
+    \includegraphics[width=.475\textwidth]{A1n10.pdf}
+    \includegraphics[width=.475\textwidth]{A1n100.pdf}
+    \caption{$N_{A, 0} = 10^1$ (links) und $N_{A, 0} = 10^2$ (rechts)}
+\end{figure}
+\end{minipage}
+\begin{minipage}{\textwidth}
+\begin{figure}[H]
+    \includegraphics[width=.475\textwidth]{A1n1000.pdf}
+    \includegraphics[width=.475\textwidth]{A1n10000.pdf}
+    \caption{$N_{A, 0} = 10^3$ (links) und $N_{A, 0} = 10^4$ (rechts)}
+\end{figure}
+\end{minipage}
+\begin{minipage}{\textwidth}
+\begin{figure}[H]
+    \includegraphics[width=.475\textwidth]{A1n100000.pdf}
+    \includegraphics[width=.475\textwidth]{A1n1000000.pdf}
+    \caption{$N_{A, 0} = 10^5$ (links) und $N_{A, 0} = 10^6$ (rechts)}
+\end{figure}
+\end{minipage}
+
 \subsection{*Zusatz: Mittlere Zeit bis zum vollständigen Zerfall}
 
 \newpage
 
 \section{Brusselatormodell}
+\subsection{Einleitung}
+Das Brusselatormodell ist eine Reaktion mit dynamischer Instabilität und wird durch follgende Reaktion beschrieben: 
+\begin{align*}
+    &~ R_0: X_0 \rightarrow X_0 + Y_0\\
+    &~ R_1: X_1 \rightarrow X_1 + Y_1 + Z_0\\
+    &~ R_2: 2Y_0 + Y_1 \rightarrow 3Y_0\\
+    &~ R_3: Y_0 \rightarrow Z_1
+\end{align*}
+Die Teilchen der Sorte $X_i$ sind die Resource der Reaktion. Die Anzahl der Edukte $X_i$ wird konstant gehalten, indem immer, wenn z.B. $X_0$ in $Y_0$ umgewandelt wird, wieder ein $x_0$ Teilchen hinzugefügt wird ($R_0$). Es handelt sich beim Brusselator um ein einfaches Modell chemischer Oszillatoren.
+
 \subsection{Differentialgleichung}
+
+\begin{align*}
+    &~ R_0: \frac{dy_0}{dt} = k_0 \cdot x_0 \\
+    &~ R_1: \frac{dy_1}{dt} = k_1 \cdot x_1 \\
+    &~ R_2: \frac{dy_0}{dt} = k_2 \cdot y_0^2 \cdot y_1;  \frac{dy_1}{dt} = -k_2 \dot y_0^2 \cdot y_1 \\
+    &~ R_3: \frac{dy_0}{dt} = -k_3 \cdot y_0\\
+    \Rightarrow &~ \frac{dy_0}{dt} = k_0 \cdot x_0 + k_2 \cdot y_0^2\cdot y_1 - k_3 \cdot y_0 \\
+    &~ \frac{dy_1}{dt} = k_1 \cdot x_1 - k_2 \cdot y_0^2 \cdot y_1
+\end{align*}
+Dabei sind $k_0$, $k_1$, $k_2$ und $k_3$ die jeweiligen Reaktionsraten der Reaktionen $R_0, R_1, R_2 und R_3$.
+
+
+
+
+
+
+
+
+
 \subsection{Übergangsraten}
 \subsection{Simulation}
 \dots 
 \section{Simulation von Ratenübergängen}
 \section{Von Reaktionsraten und Übergangsraten}
+\newpage
+\section{Wichtige Befehle in Python}
+\begin{enumerate}
+\item \lstinline[]{np.random.exponential(scale=1.0, size=None)} \\
+Draw samples from an exponential distribution. 
+\item \lstinline[]{np.random.rand(d0, d1, ..., dn)} \\
+Erzeugt gleichverteilte Zufallszahlen im Intervall [0, 1]. Optional können die Dimensionen eines Arrays übergeben werden, so dass eine Matrix mit Zufallszahlen zwischen 0 und 1 zurück gegeben wird. 
+\item \lstinline[]{np.argmax(a, axis=None, out=None)[source]} \\
+Gibt den Index des Maximums auf einer gegebenen Achse zurück.
+\end{enumerate}
+
 \newpage
 \section{Quellenverzeichnis}
 [1] http://www.uni-magdeburg.de/exph/mathe\_gl/dgl-phys1.pdf
